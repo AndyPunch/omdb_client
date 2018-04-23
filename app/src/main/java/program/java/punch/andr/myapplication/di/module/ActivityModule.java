@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import dagger.Module;
 import dagger.Provides;
-
+import io.reactivex.disposables.CompositeDisposable;
 import program.java.punch.andr.myapplication.di.scope.PerActivity;
 import program.java.punch.andr.myapplication.services.RetrofitService;
 import program.java.punch.andr.myapplication.ui.favourite.FavouriteInteractor;
@@ -35,6 +35,12 @@ public class ActivityModule {
     @Provides
     AppCompatActivity provideActivity() {
         return mActivity;
+    }
+
+
+    @Provides
+    CompositeDisposable provideCompositeDisposable() {
+        return new CompositeDisposable();
     }
 
 

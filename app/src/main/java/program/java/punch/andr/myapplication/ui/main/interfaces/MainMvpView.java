@@ -10,4 +10,5 @@ public interface MainMvpView extends BaseMvpView {
 
 
     void onMoviesLoaded(List<Movie> moviesList);
+    void onMovieInserted(boolean aBoolean);
 }

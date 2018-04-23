@@ -18,8 +18,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
 import program.java.punch.andr.myapplication.R;
 import program.java.punch.andr.myapplication.adapters.MoviesAdapter;
 import program.java.punch.andr.myapplication.data.model.Movie;
@@ -129,19 +127,20 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
 
     @Override
     public void OnAddFavouriteMovieClick(Movie movie) {
-        Single<Boolean> isFavouriteMovieAdded = mPresenter.insertFavouriteMovie(movie);
-        isFavouriteMovieAdded.subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    Toast.makeText(getApplication(), R.string.movie_is_added, Toast.LENGTH_LONG)
-                            .show();
-                } else {
-                    Toast.makeText(getApplication(), R.string.already_added, Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        });
+        mPresenter.insertFavouriteMovie(movie);
+
+    }
+
+
+    @Override
+    public void onMovieInserted(boolean aBoolean) {
+        if (aBoolean) {
+            Toast.makeText(getApplication(), R.string.movie_is_added, Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            Toast.makeText(getApplication(), R.string.already_added, Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
     @Override

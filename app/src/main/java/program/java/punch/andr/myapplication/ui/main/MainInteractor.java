@@ -16,8 +16,6 @@ public class MainInteractor extends BaseInteractor implements MainMvpInteractor 
     public MainInteractor(DbHelper dbHelper) {
         super(dbHelper);
         this.appDbHelper = dbHelper;
-
-
     }
 
 

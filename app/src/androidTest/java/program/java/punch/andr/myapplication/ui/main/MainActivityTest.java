@@ -5,7 +5,6 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -40,9 +39,11 @@ public class MainActivityTest extends InstrumentationTestCase {
     final String STRING_NO_RESULTS = "ejttrjgdbfnkyksfawhrrej";
 
 
+    @Rule
     private TestComponentRule component =
             new TestComponentRule(InstrumentationRegistry.getTargetContext());
 
+    @Rule
     private IntentsTestRule<MainActivity> main =
             new IntentsTestRule<>(MainActivity.class, false, false);
 
@@ -50,11 +51,6 @@ public class MainActivityTest extends InstrumentationTestCase {
     @Rule
     public TestRule chain = RuleChain.outerRule(component).around(main);
 
-
-    @Before
-    public void setUp() throws Exception {
-        main.launchActivity(MainActivity.getStartIntent(component.getContext()));
-    }
 
     @Test
     public void testSearchRequestWithEmptyField() throws Exception {

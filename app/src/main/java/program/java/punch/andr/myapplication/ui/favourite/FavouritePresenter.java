@@ -3,6 +3,7 @@ package program.java.punch.andr.myapplication.ui.favourite;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import program.java.punch.andr.myapplication.data.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.BasePresenter;
@@ -17,8 +18,8 @@ public class FavouritePresenter<V extends FavouriteMvpView, I extends FavouriteM
 
 
     @Inject
-    public FavouritePresenter(I mvpInteractor) {
-        super(mvpInteractor);
+    public FavouritePresenter(I mvpInteractor, CompositeDisposable compositeDisposable) {
+        super(mvpInteractor, compositeDisposable);
 
     }
 
@@ -33,23 +34,23 @@ public class FavouritePresenter<V extends FavouriteMvpView, I extends FavouriteM
 
     @Override
     public void deleteFavourite(Movie movie) {
-        getInteractor().deleteFavouriteCall(movie)
+        getCompositeDisposable().add(getInteractor().deleteFavouriteCall(movie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                     getView().OnFavouriteDeleted();
-                });
+                }));
     }
 
     @Override
     public void getFavourite() {
         getView().showProgress();
-        getInteractor().getFavouriteCall()
+        getCompositeDisposable().add(getInteractor().getFavouriteCall()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(throwable -> getView().hideProgress())
                 .doOnComplete(() -> getView().hideProgress())
-                .subscribe(movies -> FavouritePresenter.this.getView().onMoviesLoaded(movies));
+                .subscribe(movies -> FavouritePresenter.this.getView().onMoviesLoaded(movies)));
     }
 
 

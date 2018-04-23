@@ -2,10 +2,7 @@ package program.java.punch.andr.myapplication.ui.base;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import program.java.punch.andr.myapplication.ui.base.interfaces.BaseMvpInteractor;
 import program.java.punch.andr.myapplication.ui.base.interfaces.BaseMvpPresenter;
 import program.java.punch.andr.myapplication.ui.base.interfaces.BaseMvpView;
@@ -19,9 +16,12 @@ public class BasePresenter<V extends BaseMvpView, I extends BaseMvpInteractor>
 
     private I mMvpInteractor;
 
+    private final CompositeDisposable mCompositeDisposable;
+
     @Inject
-    public BasePresenter(I mvpInteractor) {
+    public BasePresenter(I mvpInteractor, CompositeDisposable compositeDisposable) {
         mMvpInteractor = mvpInteractor;
+        mCompositeDisposable = compositeDisposable;
 
     }
 
@@ -32,16 +32,14 @@ public class BasePresenter<V extends BaseMvpView, I extends BaseMvpInteractor>
 
     @Override
     public void onDetach() {
-
+        mCompositeDisposable.dispose();
         mView = null;
         mMvpInteractor = null;
     }
 
 
-    protected <T> void subscribe(Observable<T> observable, Observer<T> observer) {
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+    public CompositeDisposable getCompositeDisposable() {
+        return mCompositeDisposable;
     }
 
     @Override

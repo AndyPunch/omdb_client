@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import program.java.punch.andr.myapplication.data.model.Movie;
 import program.java.punch.andr.myapplication.db.dbHelper.interfaces.DbHelper;
 import program.java.punch.andr.myapplication.ui.base.BaseInteractor;
@@ -38,7 +38,7 @@ public class FavouriteInteractor extends BaseInteractor implements FavouriteMvpI
 
 
     @Override
-    public Flowable<List<Movie>> getFavouriteCall() {
+    public Observable<List<Movie>> getFavouriteCall() {
         return appDbHelper.getFavourite();
     }
 
