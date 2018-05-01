@@ -49,10 +49,12 @@ public class MainPresenter<V extends MainMvpView, I extends MainMvpInteractor>
                             moviesList = response.getMovies();
                             getView().onMoviesLoaded(moviesList);
                             getView().hideProgress();
-                        }, throwable -> getView().hideProgress()));
+                        }, throwable -> {
+                            getView().hideProgress();
+                        }));
     }
 
-
+    @Override
     public void insertFavouriteMovie(Movie movie) {
 
         getCompositeDisposable().add(getInteractor().insertFavouriteMovieCall(movie)

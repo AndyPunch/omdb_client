@@ -63,7 +63,7 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
 
         setTitle(getString(R.string.favourite_movies));
         setAdapter();
-        getFavourite();
+
     }
 
 
@@ -75,6 +75,8 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
         moviesRecycler.setAdapter(favouriteAdapter);
         if (mPresenter.getViewModel().getMovieViewModelList().size() > 0) {
             favouriteAdapter.addMoviesToAdapter(mPresenter.getViewModel().getMovieViewModelList());
+        } else {
+            getFavourite();
         }
     }
 
