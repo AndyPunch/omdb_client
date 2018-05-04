@@ -8,7 +8,7 @@ import program.java.punch.andr.myapplication.db.dao.FavouriteMovieDao;
 
 
 @Database(entities = {Movie.class}, version = 1)
-public abstract class  AppDatabase extends RoomDatabase{
+public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavouriteMovieDao favouriteMovieDao();
 

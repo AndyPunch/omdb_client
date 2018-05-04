@@ -12,9 +12,9 @@ import program.java.punch.andr.myapplication.ui.main.MainActivity;
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 
-        void inject(MainActivity activity);
-        void inject(FavouriteActivity activity);
+    void inject(MainActivity activity);
 
+    void inject(FavouriteActivity activity);
 
 
 }

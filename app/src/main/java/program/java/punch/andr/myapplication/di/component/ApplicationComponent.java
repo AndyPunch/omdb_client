@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 public interface ApplicationComponent {
 
     Retrofit getRetrofit();
+
     DbHelper dbHelper();
 
 
