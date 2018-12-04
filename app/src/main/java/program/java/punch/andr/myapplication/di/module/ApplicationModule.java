@@ -7,9 +7,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import program.java.punch.andr.myapplication.db.AppDatabase;
-import program.java.punch.andr.myapplication.db.dbHelper.AppDbHelper;
-import program.java.punch.andr.myapplication.db.dbHelper.interfaces.DbHelper;
+import program.java.punch.andr.myapplication.data.database.AppDatabase;
+import program.java.punch.andr.myapplication.data.database.dbHelper.AppDbHelper;
+import program.java.punch.andr.myapplication.data.database.dbHelper.interfaces.DbHelper;
 import program.java.punch.andr.myapplication.di.scope.DatabaseInfo;
 import program.java.punch.andr.myapplication.utils.AppConstants;
 import retrofit2.Retrofit;

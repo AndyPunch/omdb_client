@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import program.java.punch.andr.myapplication.R;
 import program.java.punch.andr.myapplication.adapters.FavouriteAdapter;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.BaseActivity;
 import program.java.punch.andr.myapplication.ui.favourite.interfaces.FavouriteMvpInteractor;
 import program.java.punch.andr.myapplication.ui.favourite.interfaces.FavouriteMvpPresenter;
@@ -48,8 +48,6 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
 
         ButterKnife.bind(this);
         setUp();
-
-
     }
 
 
@@ -68,16 +66,12 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
 
 
     public void setAdapter() {
-        favouriteAdapter = new FavouriteAdapter(getApplication(), this);
+        favouriteAdapter = new FavouriteAdapter(this);
         moviesRecycler.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         moviesRecycler.setEmptyView(emptyTv);
         moviesRecycler.setAdapter(favouriteAdapter);
-        if (mPresenter.getViewModel().getMovieViewModelList().size() > 0) {
-            favouriteAdapter.addMoviesToAdapter(mPresenter.getViewModel().getMovieViewModelList());
-        } else {
-            getFavourite();
-        }
+        getFavourite();
     }
 
     public void getFavourite() {
@@ -86,7 +80,6 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
 
     @Override
     public void onMoviesLoaded(List<Movie> moviesList) {
-        mPresenter.getViewModel().setMovieViewModelList(moviesList);
         favouriteAdapter.addMoviesToAdapter(moviesList);
 
     }
@@ -109,7 +102,6 @@ public class FavouriteActivity extends BaseActivity implements FavouriteMvpView,
         Toast.makeText(this, R.string.favourite_deleted, Toast.LENGTH_LONG).show();
         getFavourite();
     }
-
 
 }
 

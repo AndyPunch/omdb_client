@@ -1,10 +1,10 @@
-package program.java.punch.andr.myapplication.db;
+package program.java.punch.andr.myapplication.data.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import program.java.punch.andr.myapplication.data.model.Movie;
-import program.java.punch.andr.myapplication.db.dao.FavouriteMovieDao;
+import program.java.punch.andr.myapplication.data.database.dao.FavouriteMovieDao;
+import program.java.punch.andr.myapplication.model.Movie;
 
 
 @Database(entities = {Movie.class}, version = 1)

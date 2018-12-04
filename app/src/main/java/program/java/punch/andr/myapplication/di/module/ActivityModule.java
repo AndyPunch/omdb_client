@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
+import program.java.punch.andr.myapplication.data.network.ApiHelper;
 import program.java.punch.andr.myapplication.di.scope.PerActivity;
-import program.java.punch.andr.myapplication.services.RetrofitService;
 import program.java.punch.andr.myapplication.ui.favourite.FavouriteInteractor;
 import program.java.punch.andr.myapplication.ui.favourite.FavouritePresenter;
 import program.java.punch.andr.myapplication.ui.favourite.interfaces.FavouriteMvpInteractor;
@@ -46,8 +46,8 @@ public class ActivityModule {
 
     @PerActivity
     @Provides
-    RetrofitService provideApiService(Retrofit retrofit) {
-        return retrofit.create(RetrofitService.class);
+    ApiHelper provideApiService(Retrofit retrofit) {
+        return retrofit.create(ApiHelper.class);
     }
 
     @Provides

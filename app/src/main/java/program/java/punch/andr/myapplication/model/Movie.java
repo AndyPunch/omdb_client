@@ -1,4 +1,4 @@
-package program.java.punch.andr.myapplication.data.model;
+package program.java.punch.andr.myapplication.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

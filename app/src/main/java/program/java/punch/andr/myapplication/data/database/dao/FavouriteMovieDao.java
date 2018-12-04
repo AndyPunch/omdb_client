@@ -1,4 +1,4 @@
-package program.java.punch.andr.myapplication.db.dao;
+package program.java.punch.andr.myapplication.data.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 
 
 @Dao

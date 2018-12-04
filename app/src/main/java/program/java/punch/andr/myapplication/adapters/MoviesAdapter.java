@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import program.java.punch.andr.myapplication.R;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.main.interfaces.OnAddFavouriteClick;
 import program.java.punch.andr.myapplication.utils.GlideApp;
 
@@ -27,8 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesHold
     private Context ctx;
     private OnAddFavouriteClick mCallback;
 
-    public MoviesAdapter(Context context, OnAddFavouriteClick listener) {
-        ctx = context;
+    public MoviesAdapter(OnAddFavouriteClick listener) {
         mCallback = listener;
     }
 
@@ -36,6 +35,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesHold
     @NonNull
     @Override
     public MoviesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ctx = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_movie,
                 parent, false);
         return new MoviesHolder(view);

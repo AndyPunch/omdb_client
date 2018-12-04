@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 
 
 public class MoviesViewModel extends ViewModel {

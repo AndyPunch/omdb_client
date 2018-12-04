@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.interfaces.BaseMvpInteractor;
 
 

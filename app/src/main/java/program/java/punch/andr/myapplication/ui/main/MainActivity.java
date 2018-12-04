@@ -1,6 +1,5 @@
 package program.java.punch.andr.myapplication.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import program.java.punch.andr.myapplication.R;
 import program.java.punch.andr.myapplication.adapters.MoviesAdapter;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.BaseActivity;
 import program.java.punch.andr.myapplication.ui.favourite.FavouriteActivity;
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpInteractor;
@@ -28,6 +27,7 @@ import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpPresenter
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpView;
 import program.java.punch.andr.myapplication.ui.main.interfaces.OnAddFavouriteClick;
 import program.java.punch.andr.myapplication.utils.RecyclerViewEmptySupport;
+import program.java.punch.andr.myapplication.viewModel.MoviesViewModel;
 
 
 public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavouriteClick {
@@ -42,14 +42,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
     protected TextView emptyTv;
 
 
-    public static Intent getStartIntent(Context context) {
-        return new Intent(context, MainActivity.class);
-    }
-
     private MoviesAdapter moviesAdapter;
 
     @Inject
     public MainMvpPresenter<MainMvpView, MainMvpInteractor> mPresenter;
+
+    @Inject
+    public MoviesViewModel viewModel;
 
 
     @Override
@@ -81,13 +80,14 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
 
 
     public void setAdapter() {
-        moviesAdapter = new MoviesAdapter(getApplication(), this);
+
+        moviesAdapter = new MoviesAdapter(this);
         moviesRecycler.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         moviesRecycler.setEmptyView(emptyTv);
         moviesRecycler.setAdapter(moviesAdapter);
-        if (mPresenter.getViewModel().getMovieViewModelList().size() > 0) {
-            moviesAdapter.addMoviesToAdapter(mPresenter.getViewModel().getMovieViewModelList());
+        if (!viewModel.getMovieViewModelList().isEmpty()) {
+            moviesAdapter.addMoviesToAdapter(viewModel.getMovieViewModelList());
         }
 
     }
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
     @Override
     public void onMoviesLoaded(List<Movie> moviesList) {
         if (moviesList != null) {
-            mPresenter.getViewModel().setMovieViewModelList(moviesList);
+            viewModel.setMovieViewModelList(moviesList);
             moviesAdapter.addMoviesToAdapter(moviesList);
         } else {
             moviesAdapter.clearMovies();
@@ -145,7 +145,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_favourite, menu);
 
         return true;

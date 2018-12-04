@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import program.java.punch.andr.myapplication.data.model.Movie;
-import program.java.punch.andr.myapplication.db.dbHelper.interfaces.DbHelper;
+import program.java.punch.andr.myapplication.data.database.dbHelper.interfaces.DbHelper;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.BaseInteractor;
 import program.java.punch.andr.myapplication.ui.favourite.interfaces.FavouriteMvpInteractor;
 
@@ -20,7 +20,6 @@ public class FavouriteInteractor extends BaseInteractor implements FavouriteMvpI
     public FavouriteInteractor(DbHelper dbHelper) {
         super(dbHelper);
         this.appDbHelper = dbHelper;
-
 
     }
 

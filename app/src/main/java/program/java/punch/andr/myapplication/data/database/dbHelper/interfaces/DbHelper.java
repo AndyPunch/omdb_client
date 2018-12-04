@@ -1,4 +1,5 @@
-package program.java.punch.andr.myapplication.db.dbHelper.interfaces;
+package program.java.punch.andr.myapplication.data.database.dbHelper.interfaces;
+
 
 import java.util.List;
 
@@ -7,7 +8,7 @@ import javax.inject.Singleton;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 
 
 @Singleton

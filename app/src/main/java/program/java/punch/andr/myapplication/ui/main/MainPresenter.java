@@ -1,19 +1,18 @@
 package program.java.punch.andr.myapplication.ui.main;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import program.java.punch.andr.myapplication.data.model.Movie;
-import program.java.punch.andr.myapplication.services.RetrofitService;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.BasePresenter;
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpInteractor;
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpPresenter;
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpView;
-import program.java.punch.andr.myapplication.viewModel.MoviesViewModel;
+
+import static program.java.punch.andr.myapplication.utils.AppConstants.API_KEY;
+import static program.java.punch.andr.myapplication.utils.AppConstants.TYPE;
 
 public class MainPresenter<V extends MainMvpView, I extends MainMvpInteractor>
         extends BasePresenter<V, I>
@@ -26,28 +25,15 @@ public class MainPresenter<V extends MainMvpView, I extends MainMvpInteractor>
 
     }
 
-    @Inject
-    protected RetrofitService retrofitService;
-
-    @Inject
-    public MoviesViewModel viewModel;
-
-    @Override
-    public MoviesViewModel getViewModel() {
-        return viewModel;
-    }
-
     @Override
     public void getMovies(String title) {
         getView().showProgress();
-        getCompositeDisposable().add(retrofitService.getMovies(title)
+        getCompositeDisposable().add(getInteractor().getMoviesCall(API_KEY, TYPE, title)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {
-                            List<Movie> moviesList;
-                            moviesList = response.getMovies();
-                            getView().onMoviesLoaded(moviesList);
+                            getView().onMoviesLoaded(response.getMovies());
                             getView().hideProgress();
                         }, throwable -> {
                             getView().hideProgress();

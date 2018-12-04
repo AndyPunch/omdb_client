@@ -2,7 +2,7 @@ package program.java.punch.andr.myapplication.ui.favourite.interfaces;
 
 import java.util.List;
 
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.base.interfaces.BaseMvpView;
 
 

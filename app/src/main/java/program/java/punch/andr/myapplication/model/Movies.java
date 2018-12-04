@@ -1,4 +1,4 @@
-package program.java.punch.andr.myapplication.data.model;
+package program.java.punch.andr.myapplication.model;
 
 import java.util.List;
 

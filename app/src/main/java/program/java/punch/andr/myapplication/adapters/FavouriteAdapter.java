@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import program.java.punch.andr.myapplication.R;
-import program.java.punch.andr.myapplication.data.model.Movie;
+import program.java.punch.andr.myapplication.model.Movie;
 import program.java.punch.andr.myapplication.ui.favourite.interfaces.OnDeleteFavouriteClick;
 import program.java.punch.andr.myapplication.utils.GlideApp;
 
@@ -26,14 +26,14 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
     private Context ctx;
     private OnDeleteFavouriteClick mCallback;
 
-    public FavouriteAdapter(Context context, OnDeleteFavouriteClick listener) {
-        ctx = context;
+    public FavouriteAdapter(OnDeleteFavouriteClick listener) {
         mCallback = listener;
     }
 
     @NonNull
     @Override
     public FavouriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ctx = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourite_item_movie,
                 parent, false);
         return new FavouriteHolder(view);
@@ -80,8 +80,4 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         notifyDataSetChanged();
     }
 
-    public void clearMovies() {
-        favouriteList.clear();
-        notifyDataSetChanged();
-    }
 }
