@@ -1,7 +1,9 @@
 package program.java.punch.andr.myapplication.ui.main;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -26,13 +28,12 @@ import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpInteracto
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpPresenter;
 import program.java.punch.andr.myapplication.ui.main.interfaces.MainMvpView;
 import program.java.punch.andr.myapplication.ui.main.interfaces.OnAddFavouriteClick;
-import program.java.punch.andr.myapplication.utils.RecyclerViewEmptySupport;
 import program.java.punch.andr.myapplication.viewModel.MoviesViewModel;
 
 
 public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavouriteClick {
     @BindView(R.id.recyclerview)
-    protected RecyclerViewEmptySupport moviesRecycler;
+    protected RecyclerView moviesRecycler;
 
     @BindView(R.id.search_edittext)
     protected EditText searchEditText;
@@ -47,7 +48,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
     @Inject
     public MainMvpPresenter<MainMvpView, MainMvpInteractor> mPresenter;
 
-    @Inject
     public MoviesViewModel viewModel;
 
 
@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
         ButterKnife.bind(this);
         setUp();
 
-
     }
 
 
@@ -73,22 +72,18 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
 
     @Override
     protected void setUp() {
-
+        viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
         setTitle(R.string.app_name_public);
         setAdapter();
     }
 
 
     public void setAdapter() {
-
         moviesAdapter = new MoviesAdapter(this);
         moviesRecycler.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        moviesRecycler.setEmptyView(emptyTv);
         moviesRecycler.setAdapter(moviesAdapter);
-        if (!viewModel.getMovieViewModelList().isEmpty()) {
-            moviesAdapter.addMoviesToAdapter(viewModel.getMovieViewModelList());
-        }
+        setListFomViewModel();
 
     }
 
@@ -101,14 +96,29 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
             moviesAdapter.clearMovies();
             emptyTv.setText(R.string.no_results);
         }
-
-
     }
+
 
     @Override
     protected void onDestroy() {
         mPresenter.onDetach();
         super.onDestroy();
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setListFomViewModel();
+    }
+
+    void setListFomViewModel() {
+        if (!viewModel.getMovieViewModelList().isEmpty()) {
+            if (moviesAdapter != null) {
+                moviesAdapter.addMoviesToAdapter(viewModel.getMovieViewModelList());
+            }
+
+        }
     }
 
     @OnClick(R.id.search_button)
@@ -117,6 +127,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, OnAddFavo
             hideSoftKeyboard(this);
             String movieTitle = searchEditText.getText().toString().trim();
             if (!TextUtils.isEmpty(movieTitle)) {
+                viewModel.getMovieViewModelList().clear();
                 mPresenter.getMovies(movieTitle);
             } else
                 Toast.makeText(this, R.string.title_is_empty, Toast.LENGTH_LONG).show();

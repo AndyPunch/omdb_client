@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import program.java.punch.andr.myapplication.R;
@@ -28,10 +29,11 @@ public class GeneralUtils {
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService
                 (Activity.INPUT_METHOD_SERVICE);
-
-        if (inputMethodManager != null) {
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken
+        View focusedView = activity.getCurrentFocus();
+        if (inputMethodManager != null && focusedView != null) {
+            inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken
                     (), 0);
         }
     }
+
 }
